@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: k3s-demo
+  labels:
+    app.kubernetes.io/part-of: k3s-demo
+    # Warn about (and audit) workloads that violate the restricted Pod Security Standard.
+    # The demo application itself satisfies restricted, but enforcement is left at baseline
+    # so that simple tools such as an ad-hoc load-generator pod still work.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted

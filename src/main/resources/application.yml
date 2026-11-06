@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: k3s-demo
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+app:
+  name: ${spring.application.name}
+  version: "${APP_VERSION:local-dev}"
+  greeting: "${GREETING:Hello from k3s}"
+  # The Kubernetes Deployment overrides these through the Downward API.
+  pod-name: "${POD_NAME:${HOSTNAME:local}}"
+  pod-ip: "${POD_IP:127.0.0.1}"
+  pod-namespace: "${POD_NAMESPACE:local}"
+  node-name: "${NODE_NAME:local}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    version: "${APP_VERSION:local-dev}"

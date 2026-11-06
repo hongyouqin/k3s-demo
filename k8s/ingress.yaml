@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k3s-demo
+  namespace: k3s-demo
+  labels:
+    app.kubernetes.io/name: k3s-demo
+    app.kubernetes.io/part-of: k3s-demo
+spec:
+  # k3s ships Traefik as its default Ingress controller.
+  ingressClassName: traefik
+  rules:
+    - host: k3s-demo.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k3s-demo
+                port:
+                  name: http
